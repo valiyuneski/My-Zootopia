@@ -22,13 +22,15 @@ def create_new_html_file(file_name: str, content: str):
 
 def populate_html_from_animal_data(animals):
     """ Populates animal data with default values if not present """
-
     output = ''  # define an empty string
     for animal in animals:
-        output += f"Name: {animal['name']}\n"
-        output += f"Diet: {animal['characteristics']['diet']}\n"
-        output += f"Location: {animal['locations']}\n"
-        output += f"Type: {animal['characteristics'].get('type', "")}\n"
+        # append information to each string
+        output += '<li class="cards__item">'
+        output += f"Name: {animal['name']}<br/>\n"
+        output += f"Diet: {animal['characteristics']['diet']}<br/>\n"
+        output += f"Location: {animal['locations']}<br/>\n"
+        output += f"Type: {animal['characteristics'].get('type', "")}<br/>\n"
+        output += '</li>'
 
     new_html = replace_inside_html(output)
     create_new_html_file('animals.html', new_html)
