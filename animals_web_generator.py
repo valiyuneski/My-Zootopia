@@ -20,20 +20,28 @@ def create_new_html_file(file_name: str, content: str):
         file.write(content)
     print(f"File {file_name} created successfully.")
 
+
+def serialize_animal(animal_obj):
+    """ Serializes an animal object into a string for HTML output """
+    output = ''
+    animal_upper = animal_obj['name'].upper()
+    # append information to each string
+    output += '<li class="cards__item">'
+    output += f"<div class=Name>{animal_upper}</div><br/>"
+    output += '<p class="card__text">'
+    output += f"<strong>Diet:</strong> {animal_obj['characteristics']['diet']}<br/>"
+    output += f"<strong>Location:</strong> {animal_obj['locations']}<br/>"
+    output += f"<strong>Type:</strong> {animal_obj['characteristics'].get('type', "")}<br/>"
+    output += '</p>'
+    output += '</li>'
+    return output
+
+
 def populate_html_from_animal_data(animals):
     """ Populates animal data with default values if not present """
     output = ''  # define an empty string
     for animal in animals:
-        animal_upper = animal['name'].upper()
-        # append information to each string
-        output += '<li class="cards__item">'
-        output += f"<div class=Name>{animal_upper}</div><br/>"
-        output += '<p class="card__text">'
-        output += f"<strong>Diet:</strong> {animal['characteristics']['diet']}<br/>"
-        output += f"<strong>Location:</strong> {animal['locations']}<br/>"
-        output += f"<strong>Type:</strong> {animal['characteristics'].get('type', "")}<br/>"
-        output += '</p>'
-        output += '</li>'
+        output += serialize_animal(animal)
 
     new_html = replace_inside_html(output)
     create_new_html_file('animals.html', new_html)
