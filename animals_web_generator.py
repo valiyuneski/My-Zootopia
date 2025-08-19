@@ -5,11 +5,38 @@ def load_data(file_path):
   with open(file_path, "r") as handle:
     return json.load(handle)
 
-animals_data = load_data('animals_data.json')
 
-for animal in animals_data:
-  print(f"Animal: {animal['name']}")
-  print(f"Diet: {animal["characteristics"].get('diet', 'Unknown')}")
-  print(f"Location: {animal['locations']}")
-  print(f"Type: {animal["characteristics"].get('type', 'Unknown')}")
-  print("-" * 40)
+def replace_inside_html(to_replace_with: str) -> str:
+    """ Placeholder function for future use """
+    newdata = ""
+    with open('animals_template.html', 'r') as file:
+        newdata = file.read().replace('__REPLACE_ANIMALS_INFO__', to_replace_with)
+
+    return newdata
+
+def create_new_html_file(file_name: str, content: str):
+    """ Creates a new HTML file with the given content """
+    with open(file_name, 'w') as file:
+        file.write(content)
+    print(f"File {file_name} created successfully.")
+
+def populate_html_from_animal_data(animals):
+    """ Populates animal data with default values if not present """
+
+    output = ''  # define an empty string
+    for animal in animals:
+        output += f"Name: {animal['name']}\n"
+        output += f"Diet: {animal['characteristics']['diet']}\n"
+        output += f"Location: {animal['locations']}\n"
+        output += f"Type: {animal['characteristics'].get('type', "")}\n"
+
+    new_html = replace_inside_html(output)
+    create_new_html_file('animals.html', new_html)
+
+
+if __name__ == "__main__":
+    """ Main function to run the script """
+    print("Loading animal data...")
+    animals_data = load_data('animals_data.json')
+    populate_html_from_animal_data(animals_data)
+    print("Animal data loaded successfully.")
