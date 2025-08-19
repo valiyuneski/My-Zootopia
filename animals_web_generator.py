@@ -24,12 +24,15 @@ def populate_html_from_animal_data(animals):
     """ Populates animal data with default values if not present """
     output = ''  # define an empty string
     for animal in animals:
+        animal_upper = animal['name'].upper()
         # append information to each string
         output += '<li class="cards__item">'
-        output += f"Name: {animal['name']}<br/>\n"
-        output += f"Diet: {animal['characteristics']['diet']}<br/>\n"
-        output += f"Location: {animal['locations']}<br/>\n"
-        output += f"Type: {animal['characteristics'].get('type', "")}<br/>\n"
+        output += f"<div class=Name>{animal_upper}</div><br/>"
+        output += '<p class="card__text">'
+        output += f"<strong>Diet:</strong> {animal['characteristics']['diet']}<br/>"
+        output += f"<strong>Location:</strong> {animal['locations']}<br/>"
+        output += f"<strong>Type:</strong> {animal['characteristics'].get('type', "")}<br/>"
+        output += '</p>'
         output += '</li>'
 
     new_html = replace_inside_html(output)
