@@ -23,15 +23,19 @@ def create_new_html_file(file_name: str, content: str):
 
 def serialize_animal(animal_obj):
     """ Serializes an animal object into a string for HTML output """
-    output = ''
-    animal_upper = animal_obj['name'].upper()
+    animal_upper = animal_obj.get('name', "").upper()
+    animal_diet = animal_obj['characteristics'].get('diet', "")
+    animal_location = animal_obj.get('locations', "")[0]
+    animal_type = animal_obj['characteristics'].get('type', "")
+
     # append information to each string
+    output = ''
     output += '<li class="cards__item">'
     output += f"<div class=Name>{animal_upper}</div><br/>"
     output += '<p class="card__text">'
-    output += f"<strong>Diet:</strong> {animal_obj['characteristics']['diet']}<br/>"
-    output += f"<strong>Location:</strong> {animal_obj['locations']}<br/>"
-    output += f"<strong>Type:</strong> {animal_obj['characteristics'].get('type', "")}<br/>"
+    output += f"<strong>Diet:</strong> {animal_diet}<br/>"
+    output += f"<strong>Location:</strong> {animal_location}<br/>"
+    output += f"<strong>Type:</strong> {animal_type}<br/>"
     output += '</p>'
     output += '</li>'
     return output
